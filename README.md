@@ -17,4 +17,4 @@ Maintenance App was created solely by Andrew Cavallaro.
 ## Diagrams
 ##### Class Diagrams:
 
-![Controllers](src/diagrams/class_diagram.png)
+![Controllers](Maintenance_App/diagrams/controllers.png)
