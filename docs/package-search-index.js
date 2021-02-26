@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"giba"},{"l":"giba.controller"},{"l":"giba.globals"},{"l":"giba.model"}]

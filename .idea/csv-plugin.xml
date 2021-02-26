@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CsvFileAttributes">
+    <option name="attributeMap">
+      <map>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console_1.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console_2.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console_3.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console_4.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="C:\Users\acava\AppData\Roaming\JetBrains\IntelliJIdea2020.3\consoles\db\71bf9edd-c604-4215-bc6a-ab457a60f1a7\console_7.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\SQL\create.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\GIBA\controller\DashboardController.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\GIBA\controller\ViewDetailsController.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\GIBA\model\Details.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\GIBA\model\Employee.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\GIBA\model\Tasks.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
