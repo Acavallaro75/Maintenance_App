@@ -26,3 +26,19 @@ Maintenance App was created solely by Andrew Cavallaro.
 ![Employee Database](diagrams/giba_employees.png)
 
 ![Maintenance Diagram](diagrams/maintenance.png)
+
+
+## Built With
+
+- The integrated development environment (IDE) used for this project was IntelliJ IDEA Ultimate Edition. The Java Development Kit (JDK) is Java 11.0.6.
+
+- The databases that were implemented in this project are MySQL databases. Each database (giba_employees and maintenance) contains one table: employees and tasks. The employee database tracks employee's names, usernames, and passwords and is used to verify login information to allow access to the program and track completion of tasks across the user interface. The maintenance database tracks the tasks ID number, name, completion date, and next date to be done by.
+
+- The graphical user interface (GUI) was built using SceneBuilder and JFoenix.
+
+## Contributing
+
+If anyone would like to contribute, give feedback, or would like more information, feel free to email me at andrew.cavallarojr@gmail.com.
+
+## Author
+Andrew Cavallaro
