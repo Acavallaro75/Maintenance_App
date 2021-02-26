@@ -18,3 +18,11 @@ Maintenance App was created solely by Andrew Cavallaro.
 ##### Class Diagrams:
 
 ![Controllers](diagrams/controllers.png)
+
+![Models](diagrams/models.png)
+
+##### Database Visualization:
+
+![Employee Database](diagrams/giba_employees.png)
+
+![Maintenance Diagram](diagrams/maintenance.png)
