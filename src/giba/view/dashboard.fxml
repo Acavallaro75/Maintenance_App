@@ -49,7 +49,7 @@
             </columns>
         </TableView>
     </AnchorPane>
-    <Label layoutX="250.0" layoutY="34.0" text="giba Maintenance Tracker" textFill="WHITE">
+    <Label layoutX="250.0" layoutY="34.0" text="GIBA Maintenance Tracker" textFill="WHITE">
         <font>
             <Font name="System Bold" size="24.0"/>
         </font>
