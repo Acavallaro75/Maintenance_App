@@ -13,3 +13,8 @@ Maintenance App was created solely by Andrew Cavallaro.
 
 ## Documentation
 <p>Please use the following link to view the <a href="https://acavallaro75.github.io/Maintenance_App/index.html" rel="nofollow">JavaDoc</a> for this project.</p>
+
+## Diagrams
+##### Class Diagrams:
+
+![Controllers](src/diagrams/class_diagram.png)
