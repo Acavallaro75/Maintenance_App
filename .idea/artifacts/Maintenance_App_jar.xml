@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Maintenance_App_jar</output-path>
     <root id="archive" name="Maintenance_App.jar">
       <element id="module-output" name="Maintenance_App" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../Resources/JAR Files/jfoenix-9.0.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jars/jfoenix-9.0.10.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../Resources/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx-swt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../Resources/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.base.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../Resources/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.controls.jar" path-in-jar="/" />
