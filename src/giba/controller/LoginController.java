@@ -36,6 +36,15 @@ public class LoginController {
   // Text field to gather the user's entered username //
   @FXML private JFXTextField username;
 
+  // Parent object //
+  private Parent parent;
+
+  // Stage object //
+  private Stage stage;
+
+  // Scene object //
+  private Scene scene;
+
   /**
    * The addEmployee method is used to bring the user to the employee registration screen if the
    * "Create Account" button is clicked. It will display the add_employee.fxml layout file.
@@ -44,13 +53,13 @@ public class LoginController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void addEmployee(MouseEvent event) throws IOException {
-    Parent parent =
+  private void addEmployee(MouseEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/add_employee.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }
@@ -68,7 +77,7 @@ public class LoginController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void signInPressed(ActionEvent event) throws IOException {
+  private void signInPressed(ActionEvent event) throws IOException {
     String user = username.getText();
     String pass = password.getText();
 
@@ -78,12 +87,12 @@ public class LoginController {
 
       // If true, login to the system //
       if (login.checkEmployee(user, pass)) {
-        Parent parent =
+        parent =
             FXMLLoader.load(
                 Objects.requireNonNull(
                     getClass().getClassLoader().getResource("giba/view/dashboard.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(parent);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
       } else {

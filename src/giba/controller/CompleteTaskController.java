@@ -41,6 +41,15 @@ public class CompleteTaskController {
   // Name of the task being completed //
   @FXML private Label taskName;
 
+  // Parent object //
+  private Parent parent;
+
+  // Stage object //
+  private Stage stage;
+
+  // Scene object //
+  private Scene scene;
+
   /**
    * The initialize method sets the employeeName field to the current user and sets the DatePicker
    * to today's date.
@@ -62,14 +71,14 @@ public class CompleteTaskController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void completeTask(ActionEvent event)
+  private void completeTask(ActionEvent event)
       throws ClassNotFoundException, SQLException, IOException {
 
     // If employee name or date selected are empty or not selected //
     if (employeeName.getText().equals("") || dateSelected.getValue() == null) {
-      Alert error = new Alert(Alert.AlertType.ERROR);
-      error.setContentText("Please ensure all fields are filled properly");
-      error.show();
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please ensure all fields are filled properly");
+      alert.show();
     } else {
       LocalDate datePicked = dateSelected.getValue();
       Date day = Date.valueOf(datePicked);
@@ -99,12 +108,12 @@ public class CompleteTaskController {
         e.printStackTrace();
       }
 
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/dashboard.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }
@@ -118,12 +127,12 @@ public class CompleteTaskController {
    */
   @FXML
   public void back(ActionEvent event) throws IOException {
-    Parent parent =
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/dashboard.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }

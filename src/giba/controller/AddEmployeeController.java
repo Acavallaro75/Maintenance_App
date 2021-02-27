@@ -35,6 +35,18 @@ public class AddEmployeeController {
   // Text field for the employee's password //
   @FXML private JFXPasswordField password;
 
+  // Parent object //
+  private Parent parent;
+
+  // Stage object //
+  private Stage stage;
+
+  // Scene object //
+  private Scene scene;
+
+  // Alert object //
+  Alert alert;
+
   /**
    * The goBack method brings the user back to the landing screen.
    *
@@ -42,13 +54,13 @@ public class AddEmployeeController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void goBack(javafx.event.ActionEvent event) throws IOException {
-    Parent parent =
+  private void goBack(ActionEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/login.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }
@@ -67,40 +79,34 @@ public class AddEmployeeController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void createNewEmployee(ActionEvent event)
+  private void createNewEmployee(ActionEvent event)
       throws SQLException, ClassNotFoundException, IOException {
     String first = firstName.getText();
     String last = lastName.getText();
     String user = username.getText();
     String pass = password.getText();
 
-    // If the first name, last name, username, or password fields are empty //
     if (first.equals("") || last.equals("") || user.equals("") || pass.equals("")) {
-      Alert error = new Alert(Alert.AlertType.ERROR);
-      error.setContentText("Please ensure all fields are filled correctly");
-      error.show();
-
-      // If the length of the password is less than 8 characters //
+      alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please ensure all fields are filled correctly");
+      alert.show();
     } else if (pass.length() < 8) {
-      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Password must contain at least 8 characters");
       alert.show();
-
-      // If all fields are entered properly //
     } else {
       Employee employee = new Employee(first, last, user, pass);
       employee.addToDatabase();
+      alert = new Alert(AlertType.CONFIRMATION);
+      alert.setContentText(first + " " + last + " has been successfully registered");
+      alert.show();
 
-      Alert confirm = new Alert(AlertType.CONFIRMATION);
-      confirm.setContentText(first + " " + last + " has been successfully registered");
-      confirm.show();
-
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/login.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }

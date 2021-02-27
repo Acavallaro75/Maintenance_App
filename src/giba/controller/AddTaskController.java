@@ -41,6 +41,18 @@ public class AddTaskController {
   // Text area to put important details related to the created task //
   @FXML private JFXTextArea details;
 
+  // Parent object //
+  private Parent parent;
+
+  // Stage object //
+  private Stage stage;
+
+  // Scene object //
+  private Scene scene;
+
+  // Alert object //
+  Alert alert;
+
   /** The initialize method populates the combo box with options to select from. */
   public void initialize() {
 
@@ -64,34 +76,31 @@ public class AddTaskController {
    * @throws ClassNotFoundException yes, it does
    */
   @FXML
-  public void addTaskToSchedule(ActionEvent event)
+  private void addTaskToSchedule(ActionEvent event)
       throws IOException, SQLException, ClassNotFoundException {
     String task = taskName.getText();
     String schedule = frequency.getSelectionModel().getSelectedItem();
     String information = details.getText();
     LocalDate today = LocalDate.now();
 
-    // If task name, schedule date, or details field are empty //
     if (task.equals("") || schedule.equals("") || information.equals("")) {
-      Alert error = new Alert(Alert.AlertType.ERROR);
-      error.setContentText("Please ensure all fields are filled correctly");
-      error.show();
-
-      // If all fields are filled correctly //
+      alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please ensure all fields are filled correctly");
+      alert.show();
     } else {
       Tasks tasks = new Tasks(task, schedule, information, today);
       tasks.addToDatabase();
 
-      Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-      confirm.setContentText(task + " has been successfully created");
-      confirm.show();
+      alert = new Alert(Alert.AlertType.CONFIRMATION);
+      alert.setContentText(task + " has been successfully created");
+      alert.show();
 
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/dashboard.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }
@@ -104,13 +113,13 @@ public class AddTaskController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void goBack(ActionEvent event) throws IOException {
-    Parent parent =
+  private void goBack(ActionEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/dashboard.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }

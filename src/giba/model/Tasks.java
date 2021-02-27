@@ -1,9 +1,7 @@
 package giba.model;
 
 import giba.globals.GlobalVariables;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -30,6 +28,15 @@ public class Tasks {
   // LocalDate object is set to today plus the numberOfDays integer //
   private LocalDate nextDate;
 
+  // Connection to database //
+  private final ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+
+  // PreparedStatement object //
+  private PreparedStatement preparedStatement;
+
+  // String to be used for SQL queries //
+  private String sql;
+
   /** Default constructor. */
   public Tasks() {}
 
@@ -44,20 +51,16 @@ public class Tasks {
    * @throws SQLException yes, it does
    */
   public void updateDatabase(Date today, Date nextDay) throws ClassNotFoundException, SQLException {
-    final String url = "jdbc:mysql://localhost:3306/maintenance";
-    final String user = "root";
-    final String pass = "password";
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection connection = DriverManager.getConnection(url, user, pass);
-    String sql =
-        "UPDATE maintenance.tasks SET completion_date = ?, next_date = ? WHERE task_name = ?";
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    connectToDatabase.connectToMaintenance();
+
+    sql = "UPDATE maintenance.tasks SET completion_date = ?, next_date = ? WHERE task_name = ?";
+    preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
     preparedStatement.setDate(1, today);
     preparedStatement.setDate(2, nextDay);
     preparedStatement.setString(3, GlobalVariables.taskName);
     preparedStatement.executeUpdate();
     preparedStatement.close();
-    connection.close();
+    connectToDatabase.getConnection().close();
   }
 
   /**
@@ -150,15 +153,12 @@ public class Tasks {
     final Date day = Date.valueOf(date);
     final Date nextDay = Date.valueOf(nextDate);
 
-    final String url = "jdbc:mysql://localhost:3306/maintenance";
-    final String user = "root";
-    final String pass = "password";
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection connection = DriverManager.getConnection(url, user, pass);
-    String sql =
+    connectToDatabase.connectToMaintenance();
+
+    sql =
         "INSERT INTO maintenance.tasks (task_name, frequency, details, completion_date, next_date) "
             + "VALUES (?, ?, ?, ?, ?)";
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
     preparedStatement.setString(1, this.taskName);
     preparedStatement.setInt(2, this.numberOfDays);
     preparedStatement.setString(3, this.details);
@@ -166,6 +166,6 @@ public class Tasks {
     preparedStatement.setDate(5, nextDay);
     preparedStatement.executeUpdate();
     preparedStatement.close();
-    connection.close();
+    connectToDatabase.getConnection().close();
   }
 }

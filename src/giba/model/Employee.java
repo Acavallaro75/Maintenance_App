@@ -1,7 +1,5 @@
 package giba.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -48,20 +46,19 @@ public class Employee {
    * @throws SQLException yes, it does
    */
   public void addToDatabase() throws ClassNotFoundException, SQLException {
-    final String url = "jdbc:mysql://localhost:3306/giba_employees";
-    final String user = "root";
-    final String pass = "password";
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection connection = DriverManager.getConnection(url, user, pass);
+
+    ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+    connectToDatabase.connectToEmployees();
+
     String sql =
         "INSERT INTO employees (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    PreparedStatement preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
     preparedStatement.setString(1, this.firstName);
     preparedStatement.setString(2, this.lastName);
     preparedStatement.setString(3, this.username);
     preparedStatement.setString(4, this.password);
     preparedStatement.executeUpdate();
     preparedStatement.close();
-    connection.close();
+    connectToDatabase.getConnection().close();
   }
 }

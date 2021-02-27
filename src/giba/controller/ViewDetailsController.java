@@ -60,7 +60,7 @@ public class ViewDetailsController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void done(ActionEvent event) throws IOException {
+  private void done(ActionEvent event) throws IOException {
     Parent parent =
         FXMLLoader.load(
             Objects.requireNonNull(

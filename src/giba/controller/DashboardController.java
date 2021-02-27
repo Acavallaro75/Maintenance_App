@@ -1,11 +1,10 @@
 package giba.controller;
 
 import giba.globals.GlobalVariables;
+import giba.model.ConnectToDatabase;
 import giba.model.Tasks;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,6 +56,24 @@ public class DashboardController {
   // Table view that will display the tasks that are completed //
   @FXML private TableView<Tasks> completedTable;
 
+  // Connection to the database //
+  private final ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+
+  // String to be used in the SQL query //
+  private String sql;
+
+  // Parent object //
+  private Parent parent;
+
+  // Stage object //
+  private Stage stage;
+
+  // Scene object //
+  private Scene scene;
+
+  // Alert object //
+  Alert alert;
+
   /**
    * The initialize method is responsible for populating the table views with data from the database
    * with tasks.
@@ -81,21 +98,18 @@ public class DashboardController {
     upcomingTable.setItems(upcomingTasks);
     completedTable.setItems(completedTasks);
 
-    final String url = "jdbc:mysql://localhost:3306/maintenance";
-    final String user = "root";
-    final String pass = "password";
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection connection = DriverManager.getConnection(url, user, pass);
+    connectToDatabase.connectToMaintenance();
 
-    Statement statement = connection.createStatement();
-    String sql = "SELECT * FROM maintenance.tasks";
+    Statement statement = connectToDatabase.getConnection().createStatement();
+
+    sql = "SELECT * FROM maintenance.tasks";
+
     ResultSet resultSet = statement.executeQuery(sql);
     while (resultSet.next()) {
 
       long difference = resultSet.getDate("next_date").getTime() - today.getTime();
       long numberOfDays = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
 
-      // If the resultSet date retrieved equals today's date, move the task to the completed column
       if (resultSet.getDate("completion_date").equals(today)) {
         completedTasks.add(
             new Tasks(
@@ -124,7 +138,7 @@ public class DashboardController {
     }
     statement.close();
     resultSet.close();
-    connection.close();
+    connectToDatabase.getConnection().close();
   }
 
   /**
@@ -135,13 +149,13 @@ public class DashboardController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void addTaskPressed(MouseEvent event) throws IOException {
-    Parent parent =
+  private void addTaskPressed(MouseEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/add_task.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }
@@ -154,38 +168,32 @@ public class DashboardController {
    * @throws SQLException yes, it does
    */
   @FXML
-  public void removeTask() throws ClassNotFoundException, SQLException {
-    final String url = "jdbc:mysql://localhost:3306/maintenance";
-    final String user = "root";
-    final String pass = "password";
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection connection = DriverManager.getConnection(url, user, pass);
+  private void removeTask() throws ClassNotFoundException, SQLException {
+    connectToDatabase.connectToMaintenance();
     PreparedStatement preparedStatement;
 
-    Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+    alert = new Alert(Alert.AlertType.CONFIRMATION);
     Optional<ButtonType> result;
     ButtonType button;
 
-    String deleteTask = "DELETE FROM maintenance.tasks WHERE task_name = ?";
+    sql = "DELETE FROM maintenance.tasks WHERE task_name = ?";
 
-    // If no task is selected on the dashboard main screen //
     if (todayTable.getSelectionModel().getSelectedItem() == null
         && upcomingTable.getSelectionModel().getSelectedItem() == null
         && completedTable.getSelectionModel().getSelectedItem() == null) {
-      Alert error = new Alert(Alert.AlertType.ERROR);
-      error.setContentText("Please make a selection");
-      error.show();
+      alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please make a selection");
+      alert.show();
     } else if (todayTable.getSelectionModel().getSelectedItem() != null) {
-      confirmation.setContentText(
+      alert.setContentText(
           "Confirm removal of "
               + todayTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
-      result = confirmation.showAndWait();
+      result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
-      // If the OK button is selected from the alert //
       if (button == ButtonType.OK) {
-        preparedStatement = connection.prepareStatement(deleteTask);
+        preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
         preparedStatement.setString(
             1, todayTable.getSelectionModel().getSelectedItem().getTaskName());
         preparedStatement.executeUpdate();
@@ -193,16 +201,16 @@ public class DashboardController {
         initialize();
       }
     } else if (upcomingTable.getSelectionModel().getSelectedItem() != null) {
-      confirmation.setContentText(
+      alert.setContentText(
           "Confirm removal of "
               + upcomingTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
-      result = confirmation.showAndWait();
+      result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
       // If the OK button is selected from the alert //
       if (button == ButtonType.OK) {
-        preparedStatement = connection.prepareStatement(deleteTask);
+        preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
         preparedStatement.setString(
             1, upcomingTable.getSelectionModel().getSelectedItem().getTaskName());
         preparedStatement.executeUpdate();
@@ -210,16 +218,16 @@ public class DashboardController {
         initialize();
       }
     } else if (completedTable.getSelectionModel().getSelectedItem().getTaskName() != null) {
-      confirmation.setContentText(
+      alert.setContentText(
           "Confirm removal of "
               + completedTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
-      result = confirmation.showAndWait();
+      result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
       // If the OK button is selected from the alert //
       if (button == ButtonType.OK) {
-        preparedStatement = connection.prepareStatement(deleteTask);
+        preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
         preparedStatement.setString(
             1, completedTable.getSelectionModel().getSelectedItem().getTaskName());
         preparedStatement.executeUpdate();
@@ -237,11 +245,11 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    */
   @FXML
-  public void refresh() throws SQLException, ClassNotFoundException {
+  private void refresh() throws SQLException, ClassNotFoundException {
     initialize();
-    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-    confirm.setContentText("Successfully updated all fields");
-    confirm.show();
+    alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setContentText("Successfully updated all fields");
+    alert.show();
   }
 
   /**
@@ -251,13 +259,13 @@ public class DashboardController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void signOutPressed(ActionEvent event) throws IOException {
-    Parent parent =
+  private void signOutPressed(ActionEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/login.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }
@@ -270,49 +278,48 @@ public class DashboardController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void completeTask(ActionEvent event) throws IOException {
+  private void completeTask(ActionEvent event) throws IOException {
 
-    // If no task is selected //
     if (todayTable.getSelectionModel().getSelectedItem() == null
         && upcomingTable.getSelectionModel().getSelectedItem() == null
         && completedTable.getSelectionModel().getSelectedItem() == null) {
-      Alert error = new Alert(Alert.AlertType.ERROR);
-      error.setContentText("Please make a selection");
-      error.show();
+      alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please make a selection");
+      alert.show();
     } else if (todayTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = todayTable.getSelectionModel().getSelectedItem().getTaskName();
       GlobalVariables.numberOfDays =
           todayTable.getSelectionModel().getSelectedItem().getFrequency();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/complete_task.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     } else if (upcomingTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = upcomingTable.getSelectionModel().getSelectedItem().getTaskName();
       GlobalVariables.numberOfDays =
           upcomingTable.getSelectionModel().getSelectedItem().getFrequency();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/complete_task.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     } else if (completedTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = completedTable.getSelectionModel().getSelectedItem().getTaskName();
       GlobalVariables.numberOfDays =
           completedTable.getSelectionModel().getSelectedItem().getFrequency();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/complete_task.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }
@@ -324,41 +331,40 @@ public class DashboardController {
    * @param event Mouse click on button "View Details"
    */
   @FXML
-  public void viewTaskDetails(ActionEvent event) throws IOException {
+  private void viewTaskDetails(ActionEvent event) throws IOException {
 
-    // If the task is selected from the todayTable //
     if (todayTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = todayTable.getSelectionModel().getSelectedItem().getTaskName();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/view_details.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     } else if (upcomingTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = upcomingTable.getSelectionModel().getSelectedItem().getTaskName();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/view_details.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     } else if (completedTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = completedTable.getSelectionModel().getSelectedItem().getTaskName();
-      Parent parent =
+      parent =
           FXMLLoader.load(
               Objects.requireNonNull(
                   getClass().getClassLoader().getResource("giba/view/view_details.fxml")));
-      Scene scene = new Scene(parent);
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+      scene = new Scene(parent);
+      stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     } else {
-      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("A task must be selected to view its details");
       alert.show();
     }
@@ -372,13 +378,13 @@ public class DashboardController {
    * @throws IOException yes, it does
    */
   @FXML
-  public void viewHistory(ActionEvent event) throws IOException {
-    Parent parent =
+  private void viewHistory(ActionEvent event) throws IOException {
+    parent =
         FXMLLoader.load(
             Objects.requireNonNull(
                 getClass().getClassLoader().getResource("giba/view/view_history.fxml")));
-    Scene scene = new Scene(parent);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
   }
@@ -388,7 +394,7 @@ public class DashboardController {
    * clicking on the todayTable.
    */
   @FXML
-  public void clearSelection() {
+  private void clearSelection() {
     upcomingTable.getSelectionModel().clearSelection();
     completedTable.getSelectionModel().clearSelection();
   }
@@ -398,7 +404,7 @@ public class DashboardController {
    * clicking on the upcomingTable.
    */
   @FXML
-  public void clearSelectionTwo() {
+  private void clearSelectionTwo() {
     todayTable.getSelectionModel().clearSelection();
     completedTable.getSelectionModel().clearSelection();
   }
@@ -408,7 +414,7 @@ public class DashboardController {
    * on the completedTable.
    */
   @FXML
-  public void clearSelectionThree() {
+  private void clearSelectionThree() {
     todayTable.getSelectionModel().clearSelection();
     upcomingTable.getSelectionModel().clearSelection();
   }
