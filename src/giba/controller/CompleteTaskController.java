@@ -2,15 +2,9 @@ package giba.controller;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 import giba.model.Tasks;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +13,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * The CompleteTaskController is responsible for the completion of tasks.
@@ -70,6 +73,7 @@ public class CompleteTaskController {
    * @throws SQLException yes, it does
    * @throws IOException yes, it does
    */
+  @SuppressFBWarnings("DM_DEFAULT_ENCODING")
   @FXML
   private void completeTask(ActionEvent event)
       throws ClassNotFoundException, SQLException, IOException {
@@ -78,6 +82,10 @@ public class CompleteTaskController {
     if (employeeName.getText().equals("") || dateSelected.getValue() == null) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Please ensure all fields are filled properly");
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else {
       LocalDate datePicked = dateSelected.getValue();

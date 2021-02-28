@@ -17,7 +17,8 @@
                 <Font name="System Bold" size="12.0"/>
             </font>
         </JFXButton>
-        <JFXTextArea fx:id="historyView" layoutX="10.0" layoutY="14.0" prefHeight="378.0" prefWidth="780.0"/>
+        <JFXTextArea fx:id="historyView" layoutX="10.0" layoutY="14.0" prefHeight="378.0" prefWidth="780.0"
+                     editable="false"/>
     </AnchorPane>
     <Label layoutX="328.0" layoutY="36.0" text="View History" textFill="WHITE">
         <font>

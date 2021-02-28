@@ -1,18 +1,9 @@
 package giba.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 import giba.model.ConnectToDatabase;
 import giba.model.Tasks;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,13 +12,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The DashboardController handles all activities on the dashboard including: completing tasks,
@@ -74,6 +70,9 @@ public class DashboardController {
   // Alert object //
   Alert alert;
 
+  // DialogPane object //
+  DialogPane dialogPane;
+
   /**
    * The initialize method is responsible for populating the table views with data from the database
    * with tasks.
@@ -81,7 +80,11 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  public void initialize() throws ClassNotFoundException, SQLException {
+  @SuppressFBWarnings({
+    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
+    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
+  })
+  public void initialize() throws ClassNotFoundException, SQLException, FileNotFoundException {
 
     LocalDate now = LocalDate.now();
     Date today = Date.valueOf(now);
@@ -167,8 +170,9 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
+  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
   @FXML
-  private void removeTask() throws ClassNotFoundException, SQLException {
+  private void removeTask() throws ClassNotFoundException, SQLException, FileNotFoundException {
     connectToDatabase.connectToMaintenance();
     PreparedStatement preparedStatement;
 
@@ -183,28 +187,44 @@ public class DashboardController {
         && completedTable.getSelectionModel().getSelectedItem() == null) {
       alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Please make a selection");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else if (todayTable.getSelectionModel().getSelectedItem() != null) {
       alert.setContentText(
           "Confirm removal of "
               + todayTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
       if (button == ButtonType.OK) {
-        preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
-        preparedStatement.setString(
-            1, todayTable.getSelectionModel().getSelectedItem().getTaskName());
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
-        initialize();
+        try {
+          preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
+          preparedStatement.setString(
+              1, todayTable.getSelectionModel().getSelectedItem().getTaskName());
+          preparedStatement.executeUpdate();
+          preparedStatement.close();
+          initialize();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     } else if (upcomingTable.getSelectionModel().getSelectedItem() != null) {
       alert.setContentText(
           "Confirm removal of "
               + upcomingTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
@@ -222,6 +242,10 @@ public class DashboardController {
           "Confirm removal of "
               + completedTable.getSelectionModel().getSelectedItem().getTaskName()
               + "?");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       result = alert.showAndWait();
       button = result.orElse(ButtonType.CANCEL);
 
@@ -245,10 +269,14 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    */
   @FXML
-  private void refresh() throws SQLException, ClassNotFoundException {
+  private void refresh() throws SQLException, ClassNotFoundException, FileNotFoundException {
     initialize();
     alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setContentText("Successfully updated all fields");
+    dialogPane = alert.getDialogPane();
+    dialogPane
+        .getStylesheets()
+        .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
     alert.show();
   }
 
@@ -285,6 +313,10 @@ public class DashboardController {
         && completedTable.getSelectionModel().getSelectedItem() == null) {
       alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Please make a selection");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else if (todayTable.getSelectionModel().getSelectedItem() != null) {
       GlobalVariables.taskName = todayTable.getSelectionModel().getSelectedItem().getTaskName();
@@ -366,6 +398,10 @@ public class DashboardController {
     } else {
       alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("A task must be selected to view its details");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     }
   }
@@ -417,5 +453,23 @@ public class DashboardController {
   private void clearSelectionThree() {
     todayTable.getSelectionModel().clearSelection();
     upcomingTable.getSelectionModel().clearSelection();
+  }
+
+  /**
+   * The editProfile brings the user to the page to edit their profile.
+   *
+   * @param event Mouse click on "Edit Profile"
+   * @throws IOException yes, it does
+   */
+  @FXML
+  private void editProfile(MouseEvent event) throws IOException {
+    parent =
+        FXMLLoader.load(
+            Objects.requireNonNull(
+                getClass().getClassLoader().getResource("giba/view/edit_profile.fxml")));
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
   }
 }

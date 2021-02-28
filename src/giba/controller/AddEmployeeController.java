@@ -3,9 +3,6 @@ package giba.controller;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import giba.model.Employee;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * The AddEmployeeController class is used to add a new employee to the database.
@@ -46,6 +48,9 @@ public class AddEmployeeController {
 
   // Alert object //
   Alert alert;
+
+  // DialogPane object //
+  DialogPane dialogPane;
 
   /**
    * The goBack method brings the user back to the landing screen.
@@ -89,16 +94,28 @@ public class AddEmployeeController {
     if (first.equals("") || last.equals("") || user.equals("") || pass.equals("")) {
       alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Please ensure all fields are filled correctly");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else if (pass.length() < 8) {
       alert = new Alert(Alert.AlertType.ERROR);
       alert.setContentText("Password must contain at least 8 characters");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else {
       Employee employee = new Employee(first, last, user, pass);
       employee.addToDatabase();
       alert = new Alert(AlertType.CONFIRMATION);
       alert.setContentText(first + " " + last + " has been successfully registered");
+      dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
 
       parent =

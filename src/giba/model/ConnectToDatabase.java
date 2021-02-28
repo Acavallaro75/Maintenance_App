@@ -1,5 +1,7 @@
 package giba.model;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,16 +16,21 @@ public class ConnectToDatabase {
   // Connection object //
   private Connection connection;
 
+  // String for username to access the database //
+  private static final String user = "root";
+
+  // String for password to access the database //
+  private static final String pass = "password";
+
   /**
    * The connectToMaintenance method connects the user to the Maintenance database.
    *
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
+  @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
   public void connectToMaintenance() throws ClassNotFoundException, SQLException {
-    final String url = "jdbc:mysql://localhost:3306/maintenance";
-    final String user = "root";
-    final String pass = "password";
+    String url = "jdbc:mysql://localhost:3306/maintenance";
     Class.forName("com.mysql.cj.jdbc.Driver");
     connection = DriverManager.getConnection(url, user, pass);
   }
@@ -34,10 +41,9 @@ public class ConnectToDatabase {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
+  @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
   public void connectToEmployees() throws ClassNotFoundException, SQLException {
     final String url = "jdbc:mysql://localhost:3306/giba_employees";
-    final String user = "root";
-    final String pass = "password";
     Class.forName("com.mysql.cj.jdbc.Driver");
     connection = DriverManager.getConnection(url, user, pass);
   }

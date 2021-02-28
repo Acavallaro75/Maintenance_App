@@ -69,4 +69,7 @@
     <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="695.0" layoutY="35.0" onMouseClicked="#refresh">
         <Image url="@../resources/refresh_80px.png"/>
     </ImageView>
+    <ImageView fitHeight="62.0" fitWidth="67.0" layoutX="145.0" layoutY="22.0" onMouseClicked="#editProfile">
+        <Image url="@../resources/registration_100px.png"/>
+    </ImageView>
 </AnchorPane>

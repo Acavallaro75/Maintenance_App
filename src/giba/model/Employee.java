@@ -1,6 +1,10 @@
 package giba.model;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import giba.globals.GlobalVariables;
+
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -12,16 +16,28 @@ import java.sql.SQLException;
 public class Employee {
 
   // First name of the employee //
-  private final String firstName;
+  private String firstName;
 
   // Last name of the employee //
-  private final String lastName;
+  private String lastName;
 
   // Username of the employee //
-  private final String username;
+  private String username;
 
   // Password the employee sets //
-  private final String password;
+  private String password;
+
+  // Connection to database //
+  ConnectToDatabase connectToDatabase = new ConnectToDatabase();
+
+  // PreparedStatement object //
+  PreparedStatement preparedStatement;
+
+  // String to use in SQL queries //
+  private String sql;
+
+  /** Default constructor. */
+  public Employee() {}
 
   /**
    * The employee constructor.
@@ -45,14 +61,13 @@ public class Employee {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
+  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
   public void addToDatabase() throws ClassNotFoundException, SQLException {
 
-    ConnectToDatabase connectToDatabase = new ConnectToDatabase();
     connectToDatabase.connectToEmployees();
 
-    String sql =
-        "INSERT INTO employees (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
-    PreparedStatement preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
+    sql = "INSERT INTO employees (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
+    preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
     preparedStatement.setString(1, this.firstName);
     preparedStatement.setString(2, this.lastName);
     preparedStatement.setString(3, this.username);
@@ -60,5 +75,98 @@ public class Employee {
     preparedStatement.executeUpdate();
     preparedStatement.close();
     connectToDatabase.getConnection().close();
+  }
+
+  /**
+   * The getFromDatabase method updates variables to be used in the edit profile screen.
+   *
+   * @param firstName Employee first name
+   * @param lastName Employee last name
+   */
+  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION")
+  public void getFromDatabase(String firstName, String lastName)
+      throws SQLException, ClassNotFoundException {
+
+    this.firstName = firstName;
+    this.lastName = lastName;
+
+    connectToDatabase.connectToEmployees();
+
+    sql = "SELECT * FROM giba_employees.employees WHERE first_name = ? AND last_name = ?";
+
+    preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
+    preparedStatement.setString(1, firstName);
+    preparedStatement.setString(2, lastName);
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    while (resultSet.next()) {
+      if (resultSet.getString("first_name").equals(firstName)
+          && resultSet.getString("last_name").equals(lastName)) {
+        this.username = resultSet.getString("username");
+        this.password = resultSet.getString("password");
+      }
+    }
+  }
+
+  /**
+   * The updateDatabase method updates the employee's information in the database.
+   *
+   * @param firstName employee first name
+   * @param lastName employee last name
+   * @param username employee username
+   * @param password employee password
+   * @throws SQLException yes, it does
+   * @throws ClassNotFoundException yes, it does
+   */
+  @SuppressFBWarnings({
+    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"
+  })
+  public void updateDatabase(String firstName, String lastName, String username, String password)
+      throws SQLException, ClassNotFoundException {
+
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = username;
+    this.password = password;
+
+    connectToDatabase.connectToEmployees();
+
+    sql =
+        "UPDATE giba_employees.employees SET first_name = ?, last_name = ?, username = ?,"
+            + " password = ? WHERE first_name = ? AND last_name = ?";
+    preparedStatement = connectToDatabase.getConnection().prepareStatement(sql);
+    preparedStatement.setString(1, this.firstName);
+    preparedStatement.setString(2, this.lastName);
+    preparedStatement.setString(3, this.username);
+    preparedStatement.setString(4, this.password);
+    preparedStatement.setString(5, GlobalVariables.firstName);
+    preparedStatement.setString(6, GlobalVariables.lastName);
+    preparedStatement.executeUpdate();
+
+    preparedStatement.close();
+    connectToDatabase.getConnection().close();
+
+    GlobalVariables.firstName = this.firstName;
+    GlobalVariables.lastName = this.lastName;
+  }
+
+  /**
+   * Username accessor.
+   *
+   * @return username
+   */
+  public String getUsername() {
+    return username;
+  }
+
+  /**
+   * Password accessor.
+   *
+   * @return password
+   */
+  public String getPassword() {
+    return password;
   }
 }
