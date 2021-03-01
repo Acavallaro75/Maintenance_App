@@ -1,7 +1,5 @@
 package giba.model;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,7 +26,6 @@ public class ConnectToDatabase {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
   public void connectToMaintenance() throws ClassNotFoundException, SQLException {
     String url = "jdbc:mysql://localhost:3306/maintenance";
     Class.forName("com.mysql.cj.jdbc.Driver");
@@ -41,7 +38,6 @@ public class ConnectToDatabase {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings("DMI_CONSTANT_DB_PASSWORD")
   public void connectToEmployees() throws ClassNotFoundException, SQLException {
     final String url = "jdbc:mysql://localhost:3306/giba_employees";
     Class.forName("com.mysql.cj.jdbc.Driver");

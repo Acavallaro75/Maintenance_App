@@ -1,6 +1,5 @@
 package giba.controller;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 import giba.model.ConnectToDatabase;
 import giba.model.Tasks;
@@ -17,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -80,11 +78,7 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
-  public void initialize() throws ClassNotFoundException, SQLException, FileNotFoundException {
+  public void initialize() throws ClassNotFoundException, SQLException {
 
     LocalDate now = LocalDate.now();
     Date today = Date.valueOf(now);
@@ -170,9 +164,8 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
   @FXML
-  private void removeTask() throws ClassNotFoundException, SQLException, FileNotFoundException {
+  private void removeTask() throws ClassNotFoundException, SQLException {
     connectToDatabase.connectToMaintenance();
     PreparedStatement preparedStatement;
 
@@ -269,7 +262,7 @@ public class DashboardController {
    * @throws ClassNotFoundException yes, it does
    */
   @FXML
-  private void refresh() throws SQLException, ClassNotFoundException, FileNotFoundException {
+  private void refresh() throws SQLException, ClassNotFoundException {
     initialize();
     alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setContentText("Successfully updated all fields");

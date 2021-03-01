@@ -1,7 +1,6 @@
 package giba.controller;
 
 import com.jfoenix.controls.JFXTextArea;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,11 +30,8 @@ public class ViewHistoryController {
   /**
    * The initialize method populates the JFXTextArea with the contents of the
    * maintenance_history.txt file which is written to each time a task is marked as complete.
-   *
-   * @throws FileNotFoundException yes, it does
    */
-  @SuppressFBWarnings("DM_DEFAULT_ENCODING")
-  public void initialize() throws FileNotFoundException {
+  public void initialize() {
 
     historyView.setEditable(false);
 

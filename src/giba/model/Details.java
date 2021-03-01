@@ -1,9 +1,7 @@
 package giba.model;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 
-import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,11 +30,7 @@ public class Details {
    * @throws ClassNotFoundException yes,it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings({
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
-    "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"
-  })
-  public void retrieveDetails() throws ClassNotFoundException, SQLException, FileNotFoundException {
+  public void retrieveDetails() throws ClassNotFoundException, SQLException {
     ConnectToDatabase connectToDatabase = new ConnectToDatabase();
     connectToDatabase.connectToMaintenance();
 
@@ -69,7 +63,6 @@ public class Details {
    *
    * @return completionDate
    */
-  @SuppressFBWarnings("EI_EXPOSE_REP")
   public Date getCompletionDate() {
     return this.completionDate;
   }
@@ -79,7 +72,6 @@ public class Details {
    *
    * @return nextDate
    */
-  @SuppressFBWarnings("EI_EXPOSE_REP")
   public Date getNextDate() {
     return this.nextDate;
   }

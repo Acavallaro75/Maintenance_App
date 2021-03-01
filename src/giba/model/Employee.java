@@ -1,6 +1,5 @@
 package giba.model;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 
 import java.sql.PreparedStatement;
@@ -61,7 +60,6 @@ public class Employee {
    * @throws ClassNotFoundException yes, it does
    * @throws SQLException yes, it does
    */
-  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
   public void addToDatabase() throws ClassNotFoundException, SQLException {
 
     connectToDatabase.connectToEmployees();
@@ -83,7 +81,6 @@ public class Employee {
    * @param firstName Employee first name
    * @param lastName Employee last name
    */
-  @SuppressFBWarnings("OBL_UNSATISFIED_OBLIGATION")
   public void getFromDatabase(String firstName, String lastName)
       throws SQLException, ClassNotFoundException {
 
@@ -119,10 +116,6 @@ public class Employee {
    * @throws SQLException yes, it does
    * @throws ClassNotFoundException yes, it does
    */
-  @SuppressFBWarnings({
-    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"
-  })
   public void updateDatabase(String firstName, String lastName, String username, String password)
       throws SQLException, ClassNotFoundException {
 

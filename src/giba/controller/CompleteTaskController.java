@@ -2,7 +2,6 @@ package giba.controller;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import giba.globals.GlobalVariables;
 import giba.model.Tasks;
 import javafx.event.ActionEvent;
@@ -73,7 +72,6 @@ public class CompleteTaskController {
    * @throws SQLException yes, it does
    * @throws IOException yes, it does
    */
-  @SuppressFBWarnings("DM_DEFAULT_ENCODING")
   @FXML
   private void completeTask(ActionEvent event)
       throws ClassNotFoundException, SQLException, IOException {

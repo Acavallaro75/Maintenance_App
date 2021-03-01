@@ -1,1 +1,1 @@
-java -jar --module-path C:\Users\acava\OneDrive\Documents\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml Maintenance_App.jar
+start javaw - jar --module-path C:\Users\acava\OneDrive\Documents\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml C:\Users\acava\OneDrive - Florida Gulf Coast University\GIBA Project\Maintenance_App\out\artifacts\Maintenance_App_jar\Maintenance_App.jar

@@ -22,10 +22,6 @@ public class Login {
    * @param password password entered on the login screen
    * @return true if username and password combination is valid. Otherwise, return false
    */
-  @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({
-    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-    "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"
-  })
   public boolean checkEmployee(String username, String password) {
     try {
       if (username != null && password != null) {
