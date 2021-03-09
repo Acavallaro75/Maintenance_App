@@ -465,4 +465,20 @@ public class DashboardController {
     stage.setScene(scene);
     stage.show();
   }
+
+  /**
+   * The goToMisc method brings the user to the miscellaneous tasks page.
+   *
+   * @param event Mouse click on "Misc. Tasks" button
+   */
+  public void goToMisc(ActionEvent event) throws IOException {
+    parent =
+        FXMLLoader.load(
+            Objects.requireNonNull(
+                getClass().getClassLoader().getResource("giba/view/miscellaneous_tasks.fxml")));
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
+  }
 }

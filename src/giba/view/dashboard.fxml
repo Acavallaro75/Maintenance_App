@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,19 +9,19 @@
             xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="giba.controller.DashboardController">
     <AnchorPane layoutY="100.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: white;">
-        <JFXButton layoutX="65.0" layoutY="432.0" onAction="#completeTask" prefHeight="40.0" prefWidth="115.0"
+        <JFXButton layoutX="36.0" layoutY="432.0" onAction="#completeTask" prefHeight="40.0" prefWidth="115.0"
                    style="-fx-background-color: #8D98A7;" text="Complete Task" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
         </JFXButton>
-        <JFXButton layoutX="342.0" layoutY="432.0" onAction="#viewTaskDetails" prefHeight="40.0" prefWidth="115.0"
+        <JFXButton layoutX="444.0" layoutY="432.0" onAction="#viewTaskDetails" prefHeight="40.0" prefWidth="115.0"
                    style="-fx-background-color: #8D98A7;" text="View Details" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
         </JFXButton>
-        <JFXButton layoutX="631.0" layoutY="432.0" onAction="#viewHistory" prefHeight="40.0" prefWidth="115.0"
+        <JFXButton layoutX="646.0" layoutY="432.0" onAction="#viewHistory" prefHeight="40.0" prefWidth="115.0"
                    style="-fx-background-color: #8D98A7;" text="View History" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="12.0"/>
@@ -44,6 +44,12 @@
                 <TableColumn fx:id="completedColumn" prefWidth="266.6" text="Completed"/>
             </columns>
         </TableView>
+        <JFXButton layoutX="239.0" layoutY="432.0" onAction="#goToMisc" prefHeight="40.0" prefWidth="115.0"
+                   style="-fx-background-color: #8D98A7;" text="Misc. Tasks" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </JFXButton>
     </AnchorPane>
     <Label layoutX="250.0" layoutY="34.0" text="GIBA Maintenance Tracker" textFill="WHITE">
         <font>

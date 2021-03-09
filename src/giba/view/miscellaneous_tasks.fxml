@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #646E78;"
+            xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="giba.controller.MiscellaneousController">
+    <AnchorPane layoutY="100.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;">
+        <TextArea fx:id="miscTask" layoutX="125.0" layoutY="83.0" prefHeight="293.0" prefWidth="550.0"
+                  promptText="Enter miscellaneous task details here"/>
+        <JFXButton layoutX="342.0" layoutY="407.0" onAction="#submit" prefHeight="40.0" prefWidth="115.0"
+                   style="-fx-background-color: #8D98A7;" text="Submit" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </JFXButton>
+    </AnchorPane>
+    <Label layoutX="286.0" layoutY="36.0" text="Miscellaneous Tasks" textFill="WHITE">
+        <font>
+            <Font name="System Bold" size="24.0"/>
+        </font>
+    </Label>
+    <JFXButton layoutX="14.0" layoutY="39.0" onAction="#back" prefHeight="30.0" prefWidth="80.0"
+               style="-fx-background-color: #8D98A7;" text="Back" textFill="WHITE">
+        <font>
+            <Font name="System Bold" size="12.0"/>
+        </font>
+    </JFXButton>
+</AnchorPane>
