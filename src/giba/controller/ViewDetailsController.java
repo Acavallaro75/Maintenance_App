@@ -2,6 +2,11 @@ package giba.controller;
 
 import giba.globals.GlobalVariables;
 import giba.model.Details;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,12 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * The ViewDetailsController handles showing the details of a selectedTask from the dashboard.

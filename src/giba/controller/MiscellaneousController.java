@@ -1,6 +1,8 @@
 package giba.controller;
 
 import giba.model.MiscellaneousTasks;
+import java.io.IOException;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * The MiscellaneousController is responsible for handling miscellaneous tasks.

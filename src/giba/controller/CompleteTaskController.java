@@ -4,6 +4,13 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import giba.globals.GlobalVariables;
 import giba.model.Tasks;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +22,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * The CompleteTaskController is responsible for the completion of tasks.

@@ -1,7 +1,6 @@
 package giba.model;
 
 import giba.globals.GlobalVariables;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

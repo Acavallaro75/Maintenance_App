@@ -3,6 +3,9 @@ package giba.controller;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import giba.model.Employee;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * The AddEmployeeController class is used to add a new employee to the database.

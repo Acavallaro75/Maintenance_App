@@ -3,6 +3,8 @@ package giba.controller;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import giba.model.Login;
+import java.io.IOException;
+import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * The LoginController handles the operations that are performed on the landing screen. The user has

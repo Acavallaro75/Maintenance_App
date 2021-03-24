@@ -1,7 +1,6 @@
 package giba.model;
 
 import giba.globals.GlobalVariables;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

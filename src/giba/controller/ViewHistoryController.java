@@ -3,6 +3,14 @@ package giba.controller;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import giba.globals.GlobalVariables;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
 
 /**
  * The ViewHistoryController is responsible for displaying the contents of the
@@ -45,16 +48,18 @@ public class ViewHistoryController {
 
     File folder = new File(GlobalVariables.path);
     File[] listOfFiles = folder.listFiles();
+    assert listOfFiles != null;
+    String[] fileNames = new String[listOfFiles.length];
 
-    for (int i = 0; i < Objects.requireNonNull(listOfFiles).length; i++) {
-      String[] fileNames = new String[30];
+    for (int i = 0; i < listOfFiles.length; i++) {
       fileNames[i] = listOfFiles[i].getName();
-      List<String> files = new ArrayList<>(Arrays.asList(fileNames));
-      ObservableList<String> fileList = FXCollections.observableList(files);
-      allFiles.getItems().clear();
-      allFiles.setItems(fileList);
-      allFiles.getSelectionModel().selectFirst();
     }
+
+    List<String> files = new ArrayList<>(Arrays.asList(fileNames));
+    ObservableList<String> fileList = FXCollections.observableList(files);
+    allFiles.getItems().clear();
+    allFiles.setItems(fileList);
+    allFiles.getSelectionModel().selectFirst();
   }
 
   /**
@@ -75,6 +80,12 @@ public class ViewHistoryController {
     stage.show();
   }
 
+  /**
+   * The select method takes the selected file in the combobox and reads the file and displays the
+   * contents to the text area.
+   *
+   * @throws FileNotFoundException yes, it does
+   */
   public void select() throws FileNotFoundException {
 
     if (allFiles.getSelectionModel().getSelectedItem().equals("")
