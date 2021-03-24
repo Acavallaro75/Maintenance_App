@@ -104,7 +104,7 @@ public class Tasks {
         numberOfDays = 5;
     }
 
-    this.nextDate = LocalDate.now().plusDays(numberOfDays);
+    this.nextDate = this.date.plusDays(numberOfDays);
   }
 
   /**

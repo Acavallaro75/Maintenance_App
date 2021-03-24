@@ -86,6 +86,7 @@ public class AddTaskController {
     String task = taskName.getText();
     String schedule = frequency.getSelectionModel().getSelectedItem();
     String information = details.getText();
+    int numberOfDays;
     LocalDate today = LocalDate.now();
 
     if (task.equals("")
@@ -99,7 +100,36 @@ public class AddTaskController {
           .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
       alert.show();
     } else {
-      Tasks tasks = new Tasks(task, schedule, information, today);
+
+      switch (schedule) {
+        case "Daily":
+          numberOfDays = 1;
+          break;
+        case "Weekly":
+          numberOfDays = 7;
+          break;
+        case "Bi-Weekly":
+          numberOfDays = 14;
+          break;
+        case "Monthly":
+          numberOfDays = 30;
+          break;
+        case "Quarterly":
+          numberOfDays = 90;
+          break;
+        case "Semi-Annually":
+          numberOfDays = 180;
+          break;
+        case "Annually":
+          numberOfDays = 365;
+          break;
+        default:
+          numberOfDays = 0;
+      }
+
+      LocalDate initialDate = today.minusDays(numberOfDays);
+
+      Tasks tasks = new Tasks(task, schedule, information, initialDate);
       tasks.addToDatabase();
 
       alert = new Alert(Alert.AlertType.CONFIRMATION);

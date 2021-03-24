@@ -22,6 +22,8 @@ import java.util.Objects;
  * The EditProfileController is responsible for making changed to an employee's profile. The
  * employee can change their first name, last name, username, and password. The user can also upload
  * a photo if they would like.
+ *
+ * @author Andrew Cavallaro
  */
 public class EditProfileController {
 

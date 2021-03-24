@@ -103,9 +103,7 @@ public class CompleteTaskController {
             .append(GlobalVariables.lastName)
             .append(" completed ")
             .append(GlobalVariables.taskName)
-            .append(" on ")
-            .append(day.toString())
-            .append(".\nNotes relevant to this task: ")
+            .append(".\nNotes related to this task: ")
             .append(notes.getText())
             .append("\n\n");
         bufferedWriter.close();

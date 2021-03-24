@@ -22,6 +22,11 @@ public class MiscellaneousTasks {
       bufferedWriter
           .append("Miscellaneous task completed on ")
           .append(LocalDate.now().toString())
+          .append(" by ")
+          .append(GlobalVariables.firstName)
+          .append(" ")
+          .append(GlobalVariables.lastName)
+          .append(".")
           .append("\nDetails: ")
           .append(details)
           .append("\n\n");

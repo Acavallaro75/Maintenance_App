@@ -1,6 +1,7 @@
 package giba.globals;
 
 import java.io.File;
+import java.time.LocalDate;
 
 /**
  * The GlobalVariables class is used to transfer information screen to screen seamlessly.
@@ -21,6 +22,12 @@ public class GlobalVariables {
   // Frequency in integer format //
   public static int numberOfDays;
 
+  // Date object //
+  public static LocalDate today = LocalDate.now();
+
+  // Path to folder of reports //
+  public static final String path = "C:/Users/acava/OneDrive/Desktop/reports/";
+
   // File to be written to //
-  public static final File file = new File("maintenance_history.txt");
+  public static final File file = new File(path + today.toString() + ".doc");
 }

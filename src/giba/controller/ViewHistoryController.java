@@ -1,19 +1,24 @@
 package giba.controller;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import giba.globals.GlobalVariables;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * The ViewHistoryController is responsible for displaying the contents of the
@@ -23,6 +28,9 @@ import java.util.Scanner;
  * @author Andrew Cavallaro
  */
 public class ViewHistoryController {
+
+  // Combobox that displays all available files to choose from //
+  @FXML private JFXComboBox<String> allFiles;
 
   // JFXTextArea that will display the contents of the maintenance_history.txt file //
   @FXML private JFXTextArea historyView;
@@ -35,14 +43,17 @@ public class ViewHistoryController {
 
     historyView.setEditable(false);
 
-    try {
-      Scanner scanner = new Scanner(GlobalVariables.file);
+    File folder = new File(GlobalVariables.path);
+    File[] listOfFiles = folder.listFiles();
 
-      while (scanner.hasNext()) {
-        historyView.appendText(scanner.nextLine() + "\n");
-      }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
+    for (int i = 0; i < Objects.requireNonNull(listOfFiles).length; i++) {
+      String[] fileNames = new String[30];
+      fileNames[i] = listOfFiles[i].getName();
+      List<String> files = new ArrayList<>(Arrays.asList(fileNames));
+      ObservableList<String> fileList = FXCollections.observableList(files);
+      allFiles.getItems().clear();
+      allFiles.setItems(fileList);
+      allFiles.getSelectionModel().selectFirst();
     }
   }
 
@@ -53,7 +64,7 @@ public class ViewHistoryController {
    * @throws IOException yes, it does
    */
   @FXML
-  private void done(ActionEvent event) throws IOException {
+  private void back(ActionEvent event) throws IOException {
     Parent parent =
         FXMLLoader.load(
             Objects.requireNonNull(
@@ -62,5 +73,26 @@ public class ViewHistoryController {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
+  }
+
+  public void select() throws FileNotFoundException {
+
+    if (allFiles.getSelectionModel().getSelectedItem().equals("")
+        || allFiles.getSelectionModel().getSelectedItem() == null) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setContentText("Please choose a date.");
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane
+          .getStylesheets()
+          .add(getClass().getResource("/giba/resources/styles.css").toExternalForm());
+      alert.show();
+    } else {
+      File file = new File(GlobalVariables.path + allFiles.getSelectionModel().getSelectedItem());
+      Scanner scanner = new Scanner(file);
+
+      while (scanner.hasNext()) {
+        historyView.appendText(scanner.nextLine() + "\n");
+      }
+    }
   }
 }

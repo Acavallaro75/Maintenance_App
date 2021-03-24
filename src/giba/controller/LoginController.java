@@ -3,8 +3,6 @@ package giba.controller;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import giba.model.Login;
-import java.io.IOException;
-import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * The LoginController handles the operations that are performed on the landing screen. The user has
@@ -101,5 +102,23 @@ public class LoginController {
     } else {
       badCredentials.setText("Try Again");
     }
+  }
+
+  /**
+   * The forgotPassword method brings the user to the forgot password page so they can retrieve
+   * their password from the database.
+   *
+   * @param event Mouse click on "Forgot Password"
+   * @throws IOException yes, it does
+   */
+  public void forgotPassword(ActionEvent event) throws IOException {
+    parent =
+        FXMLLoader.load(
+            Objects.requireNonNull(
+                getClass().getClassLoader().getResource("giba/view/forgot_password.fxml")));
+    scene = new Scene(parent);
+    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+    stage.show();
   }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,18 +10,25 @@
             xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="giba.controller.ViewHistoryController">
     <AnchorPane layoutY="100.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;">
-        <JFXButton layoutX="342.0" layoutY="407.0" onAction="#done" prefHeight="40.0" prefWidth="115.0"
-                   style="-fx-background-color: #8D98A7;" text="Done" textFill="WHITE">
+        <JFXButton layoutX="342.0" layoutY="407.0" onAction="#select" prefHeight="40.0" prefWidth="115.0"
+                   style="-fx-background-color: #8D98A7;" text="Select" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
         </JFXButton>
-        <JFXTextArea fx:id="historyView" layoutX="10.0" layoutY="14.0" prefHeight="378.0" prefWidth="780.0"
-                     editable="false"/>
+        <JFXTextArea fx:id="historyView" editable="false" layoutX="10.0" layoutY="14.0" prefHeight="378.0"
+                     prefWidth="780.0"/>
+        <JFXComboBox fx:id="allFiles" layoutX="72.0" layoutY="414.0" prefHeight="25.0" prefWidth="203.0"/>
     </AnchorPane>
     <Label layoutX="328.0" layoutY="36.0" text="View History" textFill="WHITE">
         <font>
             <Font name="System Bold" size="24.0"/>
         </font>
     </Label>
+    <JFXButton layoutX="37.0" layoutY="41.0" onAction="#back" prefHeight="30.0" prefWidth="80.0"
+               style="-fx-background-color: #8D98A7;" text="Back" textFill="WHITE">
+        <font>
+            <Font name="System Bold" size="12.0"/>
+        </font>
+    </JFXButton>
 </AnchorPane>
