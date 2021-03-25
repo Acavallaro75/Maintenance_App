@@ -26,7 +26,7 @@ public class GlobalVariables {
   public static LocalDate today = LocalDate.now();
 
   // Path to folder of reports //
-  public static final String path = "C:/Users/acava/OneDrive/Desktop/reports/";
+  public static final String path = "C:/Users/kathy/OneDrive/Desktop/reports/";
 
   // File to be written to //
   public static final File file = new File(path + today.toString() + ".doc");
