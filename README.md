@@ -1,6 +1,6 @@
 # Maintenance App
 
-Project description: The GIBA Maintenance App tracks responsibilities and activites of GIBA maintenance personel. The project can perform the following duties:
+Project description: The GIBA Maintenance App tracks the responsibilities and activities of GIBA maintenance personnel. The project can perform the following duties:
   1. The system shall allow for new employees to be added to the database and be given access to the task tracking system.
   2. The system shall allow for a username and password verification system that either approves or declines users based on password and username combinations using SQL queries.
   3. The system shall allow for users to add and/or remove tasks from the database.
